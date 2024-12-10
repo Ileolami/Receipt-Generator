@@ -13,6 +13,8 @@ const TransactionReceipt = () => {
     blockNumber: number;
     contractAddress?: string;
   }
+ 
+
 
   const [transactionDetails, setTransactionDetails] =
     useState<TransactionDetails | null>(null);
@@ -32,8 +34,12 @@ const TransactionReceipt = () => {
       if (!receipt) {
         throw new Error("Transaction not found!");
       }
-
-      setTransactionDetails(receipt);
+      
+      setTransactionDetails({
+        ...receipt,
+        cumulativeGasUsed: Number(receipt.cumulativeGasUsed),
+        blockNumber: Number(receipt.blockNumber),
+      });
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
